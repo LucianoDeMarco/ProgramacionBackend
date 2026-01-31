@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "title": "Auriculares",
+    "description": "Auriculares gamer",
+    "price": 18000,
+    "thumbnail": "/img/auris.jpg",
+    "code": "AUR123",
+    "stock": 7
+  }
+]
