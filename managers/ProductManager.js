@@ -39,7 +39,7 @@ export default class ProductManager {
     products[index] = {
       ...products[index],
       ...updatedFields,
-      id: products[index].id // 🔒 no se modifica
+      id: products[index].id 
     };
 
     await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2));

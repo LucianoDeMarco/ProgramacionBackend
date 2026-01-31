@@ -9,7 +9,7 @@ const productManager = new ProductManager('./data/products.json');
 const cartManager = new CartManager('./data/carts.json');
 
 /* =======================
-   ENDPOINTS PRODUCToS
+   ENDPOINTS PRODUCTS
 ======================= */
 
 app.get('/api/products', async (req, res) => {
