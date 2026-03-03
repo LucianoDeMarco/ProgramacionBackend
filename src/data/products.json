@@ -2,23 +2,13 @@
   {
     "id": 2,
     "status": true,
-    "title": "Mouse Gamer",
-    "description": "Mouse RGB",
-    "code": "MOU123",
-    "price": 15000,
-    "stock": 10,
-    "category": "perifericos",
-    "thumbnails": []
+    "title": "Mando de PS4",
+    "price": 10000
   },
   {
     "id": 3,
     "status": true,
-    "title": "Mouse Gamer",
-    "description": "Mouse RGB",
-    "code": "MOU123",
-    "price": 15000,
-    "stock": 10,
-    "category": "perifericos",
-    "thumbnails": []
+    "title": "teclado de PS4",
+    "price": 10000
   }
 ]
