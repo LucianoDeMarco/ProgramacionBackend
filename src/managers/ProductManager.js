@@ -24,7 +24,7 @@ export default class ProductManager {
   }
 
   async addProduct(product) {
-    const products = await this.getProducts(); // ← FALTABA ESTO
+    const products = await this.getProducts(); 
 
     const newProduct = {
       id: this.generateId(products),
