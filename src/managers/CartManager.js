@@ -5,6 +5,13 @@ export default class CartManager {
     this.path = path;
   }
 
+    generateId(items) {
+    if (items.length === 0) return 1;
+
+    const maxId = Math.max(...items.map(item => item.id));
+    return maxId + 1;
+  }
+
   async getCarts() {
     if (!fs.existsSync(this.path)) return [];
     const data = await fs.promises.readFile(this.path, 'utf-8');
@@ -15,7 +22,7 @@ export default class CartManager {
     const carts = await this.getCarts();
 
     const newCart = {
-      id: carts.length === 0 ? 1 : carts.at(-1).id + 1,
+      id: this.generateId(carts),
       products: []
     };
 

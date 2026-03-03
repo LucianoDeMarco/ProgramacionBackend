@@ -5,6 +5,13 @@ export default class ProductManager {
     this.path = path;
   }
 
+    generateId(items) {
+    if (items.length === 0) return 1;
+
+    const maxId = Math.max(...items.map(item => item.id));
+    return maxId + 1;
+  }
+
   async getProducts() {
     if (!fs.existsSync(this.path)) return [];
     const data = await fs.promises.readFile(this.path, 'utf-8');
@@ -17,16 +24,21 @@ export default class ProductManager {
   }
 
   async addProduct(product) {
-    const products = await this.getProducts();
+    const products = await this.getProducts(); // ← FALTABA ESTO
 
     const newProduct = {
-      id: products.length === 0 ? 1 : products.at(-1).id + 1,
+      id: this.generateId(products),
       status: true,
       ...product
     };
 
     products.push(newProduct);
-    await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2));
+
+    await fs.promises.writeFile(
+      this.path,
+      JSON.stringify(products, null, 2)
+    );
+
     return newProduct;
   }
 
@@ -47,11 +59,19 @@ export default class ProductManager {
   }
 
   async deleteProduct(id) {
-    const products = await this.getProducts();
-    const filtered = products.filter(p => p.id !== id);
+  const products = await this.getProducts();
+  const exists = products.some(p => p.id === id);
 
-    await fs.promises.writeFile(this.path, JSON.stringify(filtered, null, 2));
-    return true;
-  }
+  if (!exists) return false;
+
+  const filtered = products.filter(p => p.id !== id);
+
+  await fs.promises.writeFile(
+    this.path,
+    JSON.stringify(filtered, null, 2)
+  );
+
+  return true;
+}
 }
 
