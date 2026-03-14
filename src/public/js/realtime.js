@@ -4,17 +4,15 @@ const productForm = document.getElementById('productForm');
 const list = document.getElementById('products');
 
 socket.on('products', products => {
-    list.innerHTML = ''; // Limpiamos la lista
+    const list = document.getElementById('products');
+    list.innerHTML = ''; 
     
     products.forEach(p => {
         const li = document.createElement('li');
-        li.style.padding = "5px";
-        li.style.borderBottom = "1px solid #eee";
         li.innerHTML = `<strong>${p.title}</strong> - $${p.price} `;
-        
         const deleteBtn = document.createElement('button');
         deleteBtn.innerText = 'Eliminar';
-        deleteBtn.onclick = () => deleteProduct(p.id);
+        deleteBtn.onclick = () => deleteProduct(p._id); 
         
         li.appendChild(deleteBtn);
         list.appendChild(li);
@@ -22,7 +20,13 @@ socket.on('products', products => {
 });
 
 async function deleteProduct(id) {
-    await fetch(`/api/products/${id}`, { method: 'DELETE' });
+    const response = await fetch(`/api/products/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (!response.ok) {
+        console.error("Error al eliminar el producto");
+    }
 }
 
 // Formulario

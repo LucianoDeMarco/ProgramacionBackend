@@ -16,7 +16,7 @@ mongoose.connect(URLmongo)
   .catch(err => console.error('Error de conexión', err));
 
 const app = express();
-const productManager = new ProductManager('./data/products.json');
+const productManager = new ProductManager();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

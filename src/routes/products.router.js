@@ -2,7 +2,7 @@ import { Router } from 'express';
 import ProductManager from '../managers/ProductManager.js';
 
 const router = Router();
-const productManager = new ProductManager('./data/products.json');
+const productManager = new ProductManager();
 
 
 router.get('/', async (req, res) => {
@@ -43,29 +43,41 @@ router.get('/', async (req, res) => {
 });
 
 
+// Agregar producto y emitir por socket
 router.post('/', async (req, res) => {
-  const newProduct = await productManager.addProduct(req.body);
+  try {
+    const newProduct = await productManager.addProduct(req.body);
 
-  const io = req.app.get('io');
-  const products = await productManager.getProducts();
-  io.emit('products', products);
+    const io = req.app.get('io');
+    const result = await productManager.getProducts({}, { lean: true });
+    
+    io.emit('products', result.docs);
 
-  res.status(201).json(newProduct);
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-
+//Eliminar producto y emitir por socket
 router.delete('/:pid', async (req, res) => {
-  const deleted = await productManager.deleteProduct(Number(req.params.pid));
+  try {
+    const pid = req.params.pid; 
+    const deleted = await productManager.deleteProduct(pid);
 
-  if (!deleted) {
-    return res.status(404).json({ error: 'Producto no encontrado' });
+    if (!deleted) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+
+    const io = req.app.get('io');
+    const result = await productManager.getProducts({}, { lean: true });
+    
+    io.emit('products', result.docs);
+
+    res.json({ message: 'Producto eliminado' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-
-  const io = req.app.get('io');
-  const products = await productManager.getProducts();
-  io.emit('products', products);
-
-  res.json({ message: 'Producto eliminado' });
 });
 
 export default router;
