@@ -1,5 +1,14 @@
 <h1>Productos en tiempo real</h1>
 
+<div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ccc;">
+    <h3>Agregar Nuevo Producto</h3>
+    <form id="productForm">
+        <input type="text" id="title" placeholder="Título" required>
+        <input type="number" id="price" placeholder="Precio" required>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
 <ul id="products"></ul>
 
 <script src="/socket.io/socket.io.js"></script>
