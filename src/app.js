@@ -7,6 +7,13 @@ import { Server } from 'socket.io';
 import viewsRouter from './routes/views.router.js';
 import productsRouter from './routes/products.router.js';
 import ProductManager from './managers/ProductManager.js';
+import mongoose from 'mongoose';
+
+const URLmongo = 'mongodb+srv://luchodemarco13_db_user:Lucho123@cluster0.mrmdkyz.mongodb.net/?appName=Cluster0'
+
+mongoose.connect(URLmongo)
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch(err => console.error('Error de conexión', err));
 
 const app = express();
 const productManager = new ProductManager('./data/products.json');
