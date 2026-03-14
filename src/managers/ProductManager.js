@@ -1,4 +1,4 @@
-import { productModel } from '../models/products.model.js';
+import { productModel } from '../models/products.models.js';
 
 export default class ProductManager {
   async getProducts(filter = {}, options = {}) {

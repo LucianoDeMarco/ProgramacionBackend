@@ -7,9 +7,10 @@ import { Server } from 'socket.io';
 import viewsRouter from './routes/views.router.js';
 import productsRouter from './routes/products.router.js';
 import ProductManager from './managers/ProductManager.js';
+import cartsRouter from './routes/carts.router.js';
 import mongoose from 'mongoose';
 
-const URLmongo = 'mongodb+srv://luchodemarco13_db_user:Lucho123@cluster0.mrmdkyz.mongodb.net/?appName=Cluster0'
+const URLmongo = 'mongodb+srv://luchodemarco13_db_user:Lucho123@cluster0.mrmdkyz.mongodb.net/products?appName=Cluster0'
 
 mongoose.connect(URLmongo)
   .then(() => console.log('Conectado a MongoDB'))
@@ -36,6 +37,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // routers
 app.use('/', viewsRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
 
 // server
 const httpServer = app.listen(8080, () => {

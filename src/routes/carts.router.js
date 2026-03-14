@@ -3,6 +3,22 @@ import { cartModel } from '../models/carts.model.js';
 
 const router = Router();
 
+
+// Crear un nuevo carrito
+router.post('/', async (req, res) => {
+  try {
+    const newCart = await cartModel.create({ products: [] });
+    
+    res.status(201).json({ 
+      status: 'success', 
+      message: 'Carrito creado con éxito', 
+      cart: newCart 
+    });
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+});
+
 //Obtener carrito con populate
 router.get('/:cid', async (req, res) => {
   try {
